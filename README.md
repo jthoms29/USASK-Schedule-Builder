@@ -25,7 +25,7 @@ Now, type the following command
 
 `py get-pip.py`
 
-After that, type `py -m pip install requests`. \
+After that, type `py -m pip install requests`.
 
 This installs the requests module, which lets this script check how many seats are
 available for any given class.
