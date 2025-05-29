@@ -59,6 +59,8 @@ class Schedule:
             'Jul': '07',
             'Aug': '08',
             'Sep': '09',
+            'Oct': '10',
+            'Nov': '11',
             'Dec': '12'
         }
     """
@@ -144,10 +146,10 @@ class Schedule:
                     newDates.append(self.dateTranslate(rawStarts[i], rawEnds[i]))
 
                 if [data['subject'], data['course num']] in requiredParams:
-                    req[data['crn']] = {'crn': data['crn'], 'subject': data['subject'], 'title': data['title'], 'section': data['section'], 'num': data['course num'], 'days': newDays, 'times': newTimes, 'dates': newDates, 'links': data['links']}
+                    req[data['crn']] = {'crn': data['crn'], 'subject': data['subject'], 'title': data['title'], 'section': data['section'], 'num': data['course num'], 'days': newDays, 'times': newTimes, 'dates': newDates, 'links': data['links'], 'req': True}
 
                 else:
-                    pos[data['crn']] = {'crn': data['crn'], 'subject': data['subject'], 'title': data['title'], 'section': data['section'], 'num': data['course num'], 'days': newDays, 'times': newTimes, 'dates': newDates, 'links': data['links']}
+                    pos[data['crn']] = {'crn': data['crn'], 'subject': data['subject'], 'title': data['title'], 'section': data['section'], 'num': data['course num'], 'days': newDays, 'times': newTimes, 'dates': newDates, 'links': data['links'], 'req': False}
 
 
         return (req, pos)
@@ -185,8 +187,8 @@ class Schedule:
         # see if this course overlaps with any times in the schedule
 
         # this is an online course, won't overlap with anything
-        if possibleCourse['days'][0][0] == '':
-            return False
+        #if possibleCourse['days'][0][0] == '':
+      #      return False
 
 
         ## look at all date ranges
@@ -196,7 +198,8 @@ class Schedule:
                 # time for this day of this course
                 possibleDay = possibleCourse['days'][i][j]
                 possibleTime = possibleCourse['times'][i]
-
+                if possibleDay == '':
+                    continue
                 for stateCourse in state.classes[possibleDay]:
                     for k in range(len(stateCourse['dates'])):
                         if self.dateOverlapCheck(possibleCourse['dates'][i], stateCourse['dates'][k]):
@@ -221,6 +224,9 @@ class Schedule:
             if possibleCourse['subject']+possibleCourse['num'] in state.classNames:
                 continue
 
+            if not possibleCourse['req'] and possibleCourse['subject'] in state.nonReqSubject:
+                continue
+
             # see if this course overlaps with any times in the schedule
             if not self.scheduleOverlapCheck(possibleCourse, state):
                 legalClasses[possibleCourse['crn']] = possibleCourse
@@ -243,6 +249,9 @@ class Schedule:
         for name in state.classNames:
             newState.classNames.add(name)
 
+        for subject in state.nonReqSubject:
+            newState.nonReqSubject.add(subject)
+
         return newState
     
 
@@ -253,7 +262,10 @@ class Schedule:
         bisect.insort_left(state.crns, course['crn'])
         state.classNames.add(course['subject']+course['num'])
 
-
+        # if this isn't a required course, add the subject to the subject list.
+        # don't want multiple non-required courses of the same subject
+        if not course['req']:
+            state.nonReqSubject.add(course['subject'])
 
         # online class, doesn't pertain to any day
         if course['days'][0][0] == '':
@@ -266,52 +278,4 @@ class Schedule:
 
 
 
-    """
-    Once a complete schedule is generated, the seat availability for each class will be checked using the seatChecker class. If any class
-    doesn't have available seats, must continue.
-    ** - required classes are checked immediately, as if there is no possible schedule involving these classes, there's no point in searching.
-    """
-    def checkSeats(self, state:State):
-        x= 5
 
-"""
-# tests
-if __name__ == '__main__':     
-    test = Schedule()
-    time2 = (1500, 1600)
-    time1 = (1200, 1500)
-    print(test.timeOverlapCheck(time1, time2))
-    pool = test.generateClassPool('2025_Winter_Term.csv', [['CMPT', '141'], ['CMPT', '145'], ['CMPT', '370']], {'HIST': '(10[0-9]|1[1-9][0-9]|[23][0-9]{2}|400)'})
-    stateTest = State()
-    set1 = test.generateLegalClasses(stateTest, pool)
-    keys = list(pool.keys())
-    test.courseToState(stateTest, pool[keys[0]])
-
-    set2 = test.generateLegalClasses(stateTest, pool)
-    keys = list(set2.keys())
-    test.courseToState(stateTest, set2[keys[0]])
-
-    set3 = test.generateLegalClasses(stateTest, pool)
-    keys = list(set3.keys())
-    test.courseToState(stateTest, set3[keys[0]])
-
-    set4 = test.generateLegalClasses(stateTest, pool)
-    keys = list(set4.keys())
-    test.courseToState(stateTest, set4[keys[0]])
-
-    set5 = test.generateLegalClasses(stateTest, pool)
-    #test.courseToState(stateTest, set5[0])
-
-    for course in set4.values():
-        print(course)
-
-    print(len(set1), len(set2), len(set3), len(set4), len(set5))
-    print(stateTest.crns)
-    print(test.timeTranslate('12:30 AM - 1:55 PM'))
-
-
-    o
-    print(overlap)
-    if overlap[0] < overlap[1]:
-        print('overlap')"
-    """
