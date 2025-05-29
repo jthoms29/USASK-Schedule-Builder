@@ -7,7 +7,7 @@ class stochasticSearch:
 
     def generateSchedule(self, termCSV:str, requiredCourses:list, softCourses:dict, totalCourseNum, latestTime):
         if totalCourseNum < len(requiredCourses):
-            return ['0000']
+            return None
 
 
         pool = Schedule().generateClassPool(termCSV, requiredCourses, softCourses, latestTime)
@@ -21,7 +21,7 @@ class stochasticSearch:
         while True:
             # if taking longer than 10 seconds, likely impossible
             if time.time() - start > 10:
-                return ['0000']
+                return None
 
             addedCourses = 0
             newState = State()
@@ -91,11 +91,4 @@ class stochasticSearch:
 
                     return newState
 
-test = stochasticSearch()
-
-# add csv for term, a list of required classes, and a dictionary of possibly wanted classes with ranges, and the total number of desired courses in the schedule
-# returns ['0000'] upon failure
-start = time.time()
-#print(test.generateSchedule('2025_Fall_term.csv', [['CMPT','381'], ['CMPT', '423'], ['LING', '349'], ['GEOL', '121'], ['CMPT', '394']], {}, 5, -1))
-#print(time.time()- start)
 

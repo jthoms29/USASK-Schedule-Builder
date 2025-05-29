@@ -65,6 +65,7 @@ def generateScheduleString(sched:State, sem):
         sString += f"================\n{day}:\n\n"
         for course in sched.classes[day]:
             sString += f"{course['subject']} {course['num']} - {course['title']} - section {course['section']}\n"
+            sString += f"CRN: {course['crn']}\n"
             sString += formatTimes(course)
             if course['crn'] not in seatCache:
                 checkSeats(sem, course['subject'], course['num'])
@@ -116,17 +117,22 @@ def runHelper():
         print("Input a list of classes you require.")
         print(" Example input: \n  CMPT 353, CMPT 332, ENG 102, HIST 208")
         required_class_string = input()
+        if required_class_string == '':
+            required_class_list = []
+            break
+
         required_class_list = required_class_string.split(', ')
         required_class_list = [course.split(" ") for course in required_class_list]
-
 
     possible_class_dict = None
     while possible_class_dict == None:
         print("Input a list of classes you possibly want - subjects with ranges")
-        print("  Exmpale input:  \n  HIST 100-200, GEOG 200-300, MATH 100-400")
+        print("  Example input:  \n  HIST 100-200, GEOG 200-300, MATH 100-400")
         possible_class_string = input()
-        if input == '':
+        if possible_class_string == '':
+            possible_class_dict = {}
             break
+
         possible_class_list = possible_class_string.split(', ')
         possible_class_dict = {}
         try:
@@ -139,9 +145,13 @@ def runHelper():
             print("Invalid input.")
             possible_class_dict = None
 
+
     filename = sem.replace(" ", "_") + ".csv"
     sched = search.generateSchedule(filename, required_class_list, possible_class_dict, num_classes, -1)
-    print(generateScheduleString(sched, sem))
+    if sched == None:
+        print("Unable to generate schedule with given parameters.")
+    else:
+        print(generateScheduleString(sched, sem))
 
     reroll = True
     while reroll:
@@ -151,6 +161,9 @@ def runHelper():
             break
 
         sched = search.generateSchedule(filename, required_class_list, possible_class_dict, num_classes, -1)
-        print(generateScheduleString(sched, sem))
+        if sched == None:
+            print("Unable to generate schedule with given parameters.")
+        else:
+            print(generateScheduleString(sched, sem))
 
 runHelper()
