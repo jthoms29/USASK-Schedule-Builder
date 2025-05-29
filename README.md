@@ -13,83 +13,120 @@ schedule if you're not happy with the one you are given.
 
 The output for a successfully generated schedule will look something like this:
 
-``` cmd
-
+``` text
 New Schedule:
 ================
 Monday:
 
-MATH 110 - Calculus I - section 27
+GEOL 121 - Earth Processes - section 01
+CRN: 80194
 Meeting time 1:
-  09:30 AM - 10:20 AM
+  11:30 AM - 12:20 PM
   09/03/2025 - 12/05/2025
-125 seats available
+240 seats available
 
-CMPT 332 - Operating Systems Concepts - section 01
+CMPT 381 - Implementation of Graphical User Interfaces - section 03
+CRN: 89392
 Meeting time 1:
-  04:30 PM - 05:20 PM
+  12:30 PM - 01:20 PM
   09/03/2025 - 12/05/2025
-120 seats available
+80 seats available
+
+CMPT 381 - Implementation of Graphical User Interfaces - section T07
+CRN: 88334
+Meeting time 1:
+  03:30 PM - 04:20 PM
+  09/03/2025 - 12/05/2025
+40 seats available
 
 ================
 Tuesday:
 
-LING 111 - Structure of Language - section 01
+CMPT 394 - Simulation Principles - section 01
+CRN: 84444
 Meeting time 1:
-  10:00 AM - 11:20 AM
+  11:30 AM - 12:50 PM
   09/03/2025 - 12/05/2025
-160 seats available
+30 seats available
+
+CMPT 423 - Machine Learning - section 01
+CRN: 88327
+Meeting time 1:
+  01:00 PM - 02:20 PM
+  09/03/2025 - 12/05/2025
+20 seats available
+
+LING 349 - Computational Linguistics - section 01
+CRN: 83918
+Meeting time 1:
+  04:00 PM - 05:20 PM
+  09/03/2025 - 12/05/2025
+30 seats available
 
 ================
 Wednesday:
 
-MATH 110 - Calculus I - section 27
+GEOL 121 - Earth Processes - section 01
+CRN: 80194
 Meeting time 1:
-  09:30 AM - 10:20 AM
+  11:30 AM - 12:20 PM
   09/03/2025 - 12/05/2025
-125 seats available
+240 seats available
 
-CMPT 332 - Operating Systems Concepts - section 01
+CMPT 381 - Implementation of Graphical User Interfaces - section 03
+CRN: 89392
 Meeting time 1:
-  04:30 PM - 05:20 PM
+  12:30 PM - 01:20 PM
   09/03/2025 - 12/05/2025
-120 seats available
+80 seats available
+
+GEOL 121 - Earth Processes - section L05
+CRN: 80198
+Meeting time 1:
+  02:30 PM - 05:20 PM
+  09/03/2025 - 12/05/2025
+40 seats available
 
 ================
 Thursday:
 
-LING 111 - Structure of Language - section 01
+CMPT 394 - Simulation Principles - section 01
+CRN: 84444
 Meeting time 1:
-  10:00 AM - 11:20 AM
+  11:30 AM - 12:50 PM
   09/03/2025 - 12/05/2025
-160 seats available
+30 seats available
 
-MATH 110 - Calculus I - section L24
+CMPT 423 - Machine Learning - section 01
+CRN: 88327
 Meeting time 1:
   01:00 PM - 02:20 PM
   09/03/2025 - 12/05/2025
-125 seats available
+20 seats available
+
+LING 349 - Computational Linguistics - section 01
+CRN: 83918
+Meeting time 1:
+  04:00 PM - 05:20 PM
+  09/03/2025 - 12/05/2025
+30 seats available
 
 ================
 Friday:
 
-MATH 110 - Calculus I - section 27
+GEOL 121 - Earth Processes - section 01
+CRN: 80194
 Meeting time 1:
-  09:30 AM - 10:20 AM
+  11:30 AM - 12:20 PM
   09/03/2025 - 12/05/2025
-125 seats available
+240 seats available
 
-CMPT 332 - Operating Systems Concepts - section T07
+CMPT 381 - Implementation of Graphical User Interfaces - section 03
+CRN: 89392
 Meeting time 1:
-  01:30 PM - 02:20 PM
+  12:30 PM - 01:20 PM
   09/03/2025 - 12/05/2025
-30 seats available
-
-CMPT 332 - Operating Systems Concepts - section 01
-Meeting time 1:
-  04:30 PM - 05:20 PM
-  09/03/2025 - 12/05/2025
-120 seats available
+80 seats available
 
 ================
 Saturday:
@@ -101,7 +138,7 @@ Sunday:
 None:
 
 
-CRNS: 80038, 80228, 80678, 81917, 87167
+CRNS: 80194, 80198, 83918, 84444, 88327, 88334, 89392
 ```
 
 This shows a week with each class in their respective days. The 'None' day corresponds to asynchronous online classes.
