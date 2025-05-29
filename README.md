@@ -9,14 +9,14 @@ at the University of Saskatchewan.
 
 Make sure you have python3 installed on your PC.
 
-[download python 3](https://www.python.org/)
+[Download Python 3](https://www.python.org/)
 
 Click the green button that says 'Code' near the top of this page. Press 'download ZIP'
 Once downloaded unzip the folder.
 
 If you don't have pip installed go to this link, download the file, and move it to the folder.
 Pip is a package manager that allows you to add extra functionality to python.
-[download pip](https://bootstrap.pypa.io/get-pip.py)
+[Download pip](https://bootstrap.pypa.io/get-pip.py)
 
 Then, in the folder, click on the search bar. While
 it's blue, type 'cmd' and press enter.
@@ -25,11 +25,12 @@ Now, type the following command
 
 `py get-pip.py`
 
-After that, type `py -m pip install requests`
+After that, type `py -m pip install requests`. \
+
 This installs the requests module, which lets this script check how many seats are
 available for any given class.
 
-After that, type `py main.py` to run the script
+After that, type `py main.py` to run the script.
 
 ## Instructions
 
