@@ -17,7 +17,7 @@ get completely up to date seating info for some class. Gets seats for every
 version of the given class, if the user generates multiple schedules it's likely
 # that they'll need seating info for more than one section.
 """
-def checkSeats(session:requests.Session, uid:str, sem:str, subj:str, num:str):
+def checkSeats(sem:str, subj:str, num:str):
     # for some reason when I don't create a new session for each specific class search
     # it just returns the same json as the first class you search every time.
     session = requests.Session()
@@ -59,7 +59,7 @@ def formatTimes(course:dict) -> str:
 """
 Generate a visual represenation of the generated schedule
 """
-def generateScheduleString(sched:State, session, uid, sem):
+def generateScheduleString(sched:State, sem):
     sString = "\n\nNew Schedule:\n"
     for day in sched.classes:
         sString += f"================\n{day}:\n\n"
@@ -67,7 +67,7 @@ def generateScheduleString(sched:State, session, uid, sem):
             sString += f"{course['subject']} {course['num']} - {course['title']} - section {course['section']}\n"
             sString += formatTimes(course)
             if course['crn'] not in seatCache:
-                checkSeats(session, uid, sem, course['subject'], course['num'])
+                checkSeats(sem, course['subject'], course['num'])
 
             sString += f"{seatCache[course['crn']]} seats available\n\n"
 
@@ -81,9 +81,6 @@ def generateScheduleString(sched:State, session, uid, sem):
 
 
 def runHelper():
-    # start up a new request session. Used for getting up-to-date seating info
-    session = requests.Session()
-    uid = str(int(time.time() * 100000000))
 
     search = stochasticSearch();
 
@@ -101,7 +98,6 @@ def runHelper():
             sem = '2026 Winter Term'
             break
 
-    scraper.getSemester(session, uid, sem)
 
     num_classes = - 1
     while num_classes < 1:
@@ -124,15 +120,28 @@ def runHelper():
         required_class_list = [course.split(" ") for course in required_class_list]
 
 
-    possible_class_dict = {}
+    possible_class_dict = None
     while possible_class_dict == None:
         print("Input a list of classes you possibly want - subjects with ranges")
         print("  Exmpale input:  \n  HIST 100-200, GEOG 200-300, MATH 100-400")
-
+        possible_class_string = input()
+        if input == '':
+            break
+        possible_class_list = possible_class_string.split(', ')
+        possible_class_dict = {}
+        try:
+            for subject in possible_class_list:
+                subj_num = subject.split(' ')
+                subj = subj_num[0]
+                num = subj_num[1]
+                possible_class_dict[subj] = num
+        except:
+            print("Invalid input.")
+            possible_class_dict = None
 
     filename = sem.replace(" ", "_") + ".csv"
     sched = search.generateSchedule(filename, required_class_list, possible_class_dict, num_classes, -1)
-    print(generateScheduleString(sched, session, uid, sem))
+    print(generateScheduleString(sched, sem))
 
     reroll = True
     while reroll:
@@ -142,6 +151,6 @@ def runHelper():
             break
 
         sched = search.generateSchedule(filename, required_class_list, possible_class_dict, num_classes, -1)
-        print(generateScheduleString(sched, session, uid, sem))
+        print(generateScheduleString(sched, sem))
 
 runHelper()
