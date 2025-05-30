@@ -268,7 +268,12 @@ class Schedule:
 
         # online class, doesn't pertain to any day
         if course['days'][0][0] == '':
-            state.classes['None'].append(course)
+            unique_meeting = course.copy()
+            unique_meeting['meeting'] = 1
+            unique_meeting['days'] = unique_meeting['days'][0]
+            unique_meeting['times'] = unique_meeting['times'][0]
+            unique_meeting['dates'] = unique_meeting['dates'][0]
+            state.classes['None'].append(unique_meeting)
             return
 
         for i in range(len(course['days'])):
