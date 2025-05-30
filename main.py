@@ -49,10 +49,9 @@ into a readable format
 """
 def formatTimes(course:dict) -> str:
     timeStr = ""
-    for i in range(len(course['dates'])):
-        timeStr += f"Meeting time {i+1}:\n"
-        timeStr += "  " + toAmPm(course['times'][i][0]) + " - " + toAmPm(course['times'][i][1]) + "\n"
-        timeStr += "  " + toCalendar(course['dates'][i][0]) + " - " + toCalendar(course['dates'][i][1]) + "\n"
+    timeStr += f"Meeting time {course['meeting']}:\n"
+    timeStr += "  " + toAmPm(course['times'][0]) + " - " + toAmPm(course['times'][1]) + "\n"
+    timeStr += "  " + toCalendar(course['dates'][0]) + " - " + toCalendar(course['dates'][1]) + "\n"
     return timeStr
 
 

@@ -201,10 +201,9 @@ class Schedule:
                 if possibleDay == '':
                     continue
                 for stateCourse in state.classes[possibleDay]:
-                    for k in range(len(stateCourse['dates'])):
-                        if self.dateOverlapCheck(possibleCourse['dates'][i], stateCourse['dates'][k]):
-                            if self.timeOverlapCheck(stateCourse['times'][k], possibleTime):
-                                return True
+                    if self.dateOverlapCheck(possibleCourse['dates'][i], stateCourse['dates']):
+                        if self.timeOverlapCheck(stateCourse['times'], possibleTime):
+                            return True
 
         return False
         
@@ -272,9 +271,14 @@ class Schedule:
             state.classes['None'].append(course)
             return
 
-        for daySet in course['days']:
-            for day in daySet:
-                state.classes[day].append(course)
+        for i in range(len(course['days'])):
+            unique_meeting = course.copy()
+            unique_meeting['meeting'] = i+1
+            unique_meeting['days'] = unique_meeting['days'][i]
+            unique_meeting['times'] = unique_meeting['times'][i]
+            unique_meeting['dates'] = unique_meeting['dates'][i]
+            for day in course['days'][i]:
+                state.classes[day].append(unique_meeting)
 
 
 
