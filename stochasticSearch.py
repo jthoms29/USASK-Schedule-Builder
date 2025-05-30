@@ -87,7 +87,7 @@ class stochasticSearch:
                 if addedCourses == totalCourseNum:
                     
                     for day in newState.classes:
-                        newState.classes[day].sort(key=lambda course: course['times'][0][0])
+                        newState.classes[day].sort(key=lambda course: course['times'][0])
 
                     return newState
 
